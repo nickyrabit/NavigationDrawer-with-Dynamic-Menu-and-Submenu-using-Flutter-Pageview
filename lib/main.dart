@@ -7,7 +7,6 @@ import 'dart:developer';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:get/get.dart';
 
 import 'views/main_menu/receivables/receipts.dart';
 
@@ -19,7 +18,7 @@ List<Widget> _pages;
 PageController _pageController;
 
 class Controller extends GetxController {
-  // making the varibale observable to be able to change it when new screen is opened
+  // making the variable observable to be able to change it when new screen is opened
   var title = "Dashboard".obs;
 }
 
