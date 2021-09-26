@@ -1,5 +1,5 @@
 import 'package:dynamic_navigation_drawer/views/dashboard.dart';
-import 'package:dynamic_navigation_drawer/views/main_menu/receivables/payments.dart';
+import 'package:dynamic_navigation_drawer/views/main_menu/receivables/fund_source.dart';
 import 'package:dynamic_navigation_drawer/views/setups/gfs_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // 1
       Receipts(),
       // 2
-      Payments(),
+      FundSource(),
       // 3
       GFSCodes()
       ];
