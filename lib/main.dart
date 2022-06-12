@@ -16,6 +16,10 @@ void main() => runApp(MyHomePage());
 var _selectedPageIndex;
 List<Widget> _pages;
 PageController _pageController;
+Map<String, String> headers = {
+  'content-type': 'application/json; charset=utf-8',
+  'accept': 'application/json'
+};
 
 class Controller extends GetxController {
   // making the variable observable to be able to change it when new screen is opened
@@ -35,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _responseFuture = http.get('https://jsonkeeper.com/b/LD4N');
+    _responseFuture = http.get(Uri.parse('https://jsonkeeper.com/b/LD4N'),headers: headers) ;
     _selectedPageIndex = 0;
     _pages = [
       // it is important to keep these indices number so you will find it easier to reference them whne you want to open them
@@ -66,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Accounting App',
 
       home: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(title: Obx(() => Text("${c.title.value}"))),
         // this is our main tool PageView
         // we need to stop it from scrolling with NeverScrollableScrollPhysics()
@@ -99,7 +103,8 @@ class MyExpansionTileState extends State<MyExpansionTile> {
   @override
   void initState() {
     super.initState();
-     _responseFuture = http.get('https://jsonkeeper.com/b/LD4N');
+     _responseFuture = http.get(Uri.parse('https://jsonkeeper.com/b/LD4N'),headers: headers);
+
   }
 
   @override
