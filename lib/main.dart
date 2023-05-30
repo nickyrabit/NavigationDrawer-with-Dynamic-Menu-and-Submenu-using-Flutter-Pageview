@@ -80,9 +80,10 @@ class MyExpansionTile extends StatefulWidget {
 }
 
 class MyExpansionTileState extends State<MyExpansionTile> {
-  PageStorageKey _key;
-  Future<http.Response> _responseFuture;
-  String title;
+  late Future<http.Response> _responseFuture;
+ // Initialized non-nullable field 'title'
+  String title = "";
+
 
   @override
   void initState() {
