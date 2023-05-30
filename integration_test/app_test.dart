@@ -3,14 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:dynamic_navigation_drawer/main.dart' as app;
 
-void main() => _testMain();
+void main() => _testMain(); // Changed this line
 
 void _testMain() {
-  setUp(() {
-    // Mock the counter behavior by overriding the actual increment logic.
-    app.Counter.increment = () {};
-  });
-
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     app.main();
