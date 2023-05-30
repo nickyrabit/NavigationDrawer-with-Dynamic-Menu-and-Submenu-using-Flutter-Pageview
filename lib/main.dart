@@ -80,6 +80,7 @@ class MyExpansionTile extends StatefulWidget {
 }
 
 class MyExpansionTileState extends State<MyExpansionTile> {
+  // ignore: unused_field
   late Future<http.Response> _responseFuture;
  // Initialized non-nullable field 'title'
   String title = "";
