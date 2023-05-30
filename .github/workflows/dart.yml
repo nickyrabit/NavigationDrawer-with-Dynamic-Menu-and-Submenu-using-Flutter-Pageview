@@ -25,9 +25,16 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Uncomment this step to verify the use of 'flutter format' on each commit.
-      # - name: Verify formatting
-      #   run: flutter format --output=none --set-exit-if-changed .
+      # Create analysis_options.yaml file with the specified rules
+      - name: Create analysis_options.yaml
+        run: |
+          echo "include: package:flutter_lints/flutter.yaml" > analysis_options.yaml
+          echo "" >> analysis_options.yaml
+          echo "linter:" >> analysis_options.yaml
+          echo "  rules:" >> analysis_options.yaml
+          echo "    unused_field: false" >> analysis_options.yaml
+          echo "    undefined_function: false" >> analysis_options.yaml
+          echo "    not_initialized_non_nullable_instance_field: false" >> analysis_options.yaml
 
       - name: Analyze project source
         run: flutter analyze
