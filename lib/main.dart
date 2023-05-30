@@ -12,70 +12,54 @@ import 'views/main_menu/receivables/receipts.dart';
 
 void main() => runApp(MyHomePage());
 
-// initiating variables for this indexes and paging
-var _selectedPageIndex;
-List<Widget> _pages;
-PageController _pageController;
+var _selectedPageIndex = 0;
+late List<Widget> _pages;
+late PageController _pageController;
 Map<String, String> headers = {
   'content-type': 'application/json; charset=utf-8',
   'accept': 'application/json'
 };
 
 class Controller extends GetxController {
-  // making the variable observable to be able to change it when new screen is opened
   var title = "Dashboard".obs;
 }
 
 class MyHomePage extends StatefulWidget {
-  //defining the title
-  final String title;
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final String? title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<http.Response> _responseFuture;
+  late Future<http.Response> _responseFuture;
   @override
   void initState() {
     super.initState();
     _responseFuture = http.get(Uri.parse('https://jsonkeeper.com/b/LD4N'),headers: headers) ;
-    _selectedPageIndex = 0;
     _pages = [
-      // it is important to keep these indices number so you will find it easier to reference them whne you want to open them
-      // 0
       Dashboard(),
-      // 1
       Receipts(),
-      // 2
       FundSource(),
-      // 3
       GFSCodes()
-      ];
-    // initiating a page controller
+    ];
     _pageController = PageController(initialPage: _selectedPageIndex);
   }
 
-  @override
+   @override
   void dispose() {
-    // dispose the page controller
     _pageController.dispose();
     super.dispose();
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     Controller c = Get.put(Controller());
     return GetMaterialApp(
       title: 'Accounting App',
-
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(title: Obx(() => Text("${c.title.value}"))),
-        // this is our main tool PageView
-        // we need to stop it from scrolling with NeverScrollableScrollPhysics()
-        // we need to list all screens with _pages variable at children
-        // we need to attach our page controller here
         body: PageView(
           controller: _pageController,
           physics: NeverScrollableScrollPhysics(),
@@ -183,7 +167,6 @@ Widget createDrawer(
     child: SingleChildScrollView(
       controller: _controller,
       child: Column(
-        // Important: Remove any padding from the ListView.
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text("Matinde Davis"),
@@ -196,36 +179,35 @@ Widget createDrawer(
               ),
             ),
           ),
-          new FutureBuilder(
+          FutureBuilder(
             future: _responseFuture,
             builder:
                 (BuildContext context, AsyncSnapshot<http.Response> response) {
-
               if (!response.hasData) {
                 return const Center(
-                  child: const Text('Loading...'),
+                  child: const CircularProgressIndicator(),
                 );
-              } else if (response.data.statusCode != 200) {
+              } else if (response.data?.statusCode != 200) {
                 return const Center(
                   child: const Text('Error loading data'),
                 );
               } else {
-                List<dynamic> json = jsonDecode(response.data.body);
-                return new MyExpansionTileList(elementList: json);
+                List<dynamic> json = jsonDecode(response.data!.body);
+                return MyExpansionTileList(elementList: json);
               }
             },
-          )
+          ),
         ],
       ),
     ),
   );
 }
 
+
 class MyExpansionTileList extends StatefulWidget {
-  BuildContext context;
   final List<dynamic> elementList;
 
-  MyExpansionTileList({Key key, this.elementList}) : super(key: key);
+  MyExpansionTileList({Key? key, required this.elementList}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DrawerState();
